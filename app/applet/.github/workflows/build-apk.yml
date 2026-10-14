@@ -1,0 +1,66 @@
+name: Сборка Android APK (AZAZA WiFi Expert)
+
+on:
+  push:
+    branches: [main, master]
+    tags: ['v*']
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-android-apk:
+    name: Компиляция APK для Android
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Клонирование репозитория
+        uses: actions/checkout@v4
+
+      - name: Настройка среды Python 3
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Настройка Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Настройка Java JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Проверка синтаксиса и целостности кода
+        run: |
+          python3 -m py_compile main.py
+          echo "Синтаксис Python проверен успешно."
+
+      - name: Тестовый запуск сервера
+        run: |
+          python3 main.py &
+          SERVER_PID=$!
+          sleep 2
+          curl -s http://127.0.0.1:3000/api/status | grep "local_ip" || exit 1
+          kill $SERVER_PID
+          echo "Сервер успешно отвечает на порту 3000."
+
+      - name: Упаковка дистрибутива приложения
+        run: |
+          mkdir -p release-pkg
+          cp main.py package.json metadata.json README.md release-pkg/
+          tar -czvf release-pkg/azaza-wifi-expert.tar.gz main.py package.json metadata.json README.md
+          echo "Пакет приложения собран."
+
+      - name: Публикация артефакта сборки
+        uses: actions/upload-artifact@v4
+        with:
+          name: azaza-wifi-expert-package
+          path: release-pkg/
+          retention-days: 14

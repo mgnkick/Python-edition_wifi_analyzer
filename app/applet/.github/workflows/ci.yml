@@ -1,0 +1,36 @@
+name: CI Автоматическая проверка и компиляция
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test-and-compile:
+    name: Проверка и компиляция Python
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Клонирование репозитория
+        uses: actions/checkout@v4
+
+      - name: Настройка Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Компиляция Python файлов
+        run: |
+          python3 -m compileall -b .
+
+      - name: Проверка работы сетевых эндпоинтов
+        run: |
+          python3 main.py &
+          PID=$!
+          sleep 2
+          curl -f http://localhost:3000/ || exit 1
+          curl -f http://localhost:3000/api/status || exit 1
+          curl -f http://localhost:3000/manifest.json || exit 1
+          kill $PID
+          echo "Все сетевые эндпоинты работают исправно!"
