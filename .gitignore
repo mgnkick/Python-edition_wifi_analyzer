@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+.dev.env.json
+
+# Node & AI Studio
+node_modules/
+dist/
+.bootstrap/
+project.zip
+*.log
+
+# Android Build & Gradle
+android/.gradle/
+android/local.properties
+android/build/
+android/app/build/
+android/.idea/
+*.apk
+*.aab
+
+# OS
+.DS_Store
+Thumbs.db

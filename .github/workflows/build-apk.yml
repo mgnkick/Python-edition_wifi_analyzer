@@ -1,0 +1,75 @@
+name: Сборка Android APK (Azaza NETwork Tool)
+
+on:
+  push:
+    branches: [main, master]
+    tags: ['v*']
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-apk:
+    name: Автоматическая компиляция .apk
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Клонирование репозитория
+        uses: actions/checkout@v4
+
+      - name: Настройка среды Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Настройка Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: 'platforms;android-34 build-tools;34.0.0 platform-tools'
+
+      - name: Настройка прав запуска Gradle Wrapper
+        run: |
+          chmod +x android/gradlew
+          echo "Права на gradlew установлены."
+
+      - name: Компиляция автономного Android APK
+        working-directory: android
+        run: |
+          ./gradlew --no-daemon --stacktrace assembleDebug
+
+      - name: Подготовка единого .apk файла
+        run: |
+          APK_SRC=$(find android/app/build/outputs/apk/ -name "*.apk" | head -n 1)
+          if [ -z "$APK_SRC" ]; then
+            echo "Ошибка: APK файл не найден!"
+            exit 1
+          fi
+          echo "Найден скомпилированный APK: $APK_SRC"
+          cp "$APK_SRC" AzazaNETworkTool.apk
+          ls -lh AzazaNETworkTool.apk
+          echo "Файл AzazaNETworkTool.apk готов к загрузке."
+
+      - name: Публикация единственного артефакта .apk
+        uses: actions/upload-artifact@v4
+        with:
+          name: AzazaNETworkTool-APK
+          path: AzazaNETworkTool.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Прикрепление .apk к GitHub Релизу
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: AzazaNETworkTool.apk
+          name: "Релиз Azaza NETwork Tool ${{ github.ref_name }}"
+          generate_release_notes: true

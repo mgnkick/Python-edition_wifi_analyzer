@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Outer CRT / Terminal Box -->
+  <rect x="4" y="4" width="120" height="120" rx="8" fill="#000084" stroke="#00aaaa" stroke-width="4"/>
+  
+  <!-- Left Panel -->
+  <rect x="12" y="14" width="48" height="88" fill="#0000a8" stroke="#00aaaa" stroke-width="2"/>
+  <rect x="12" y="14" width="48" height="12" fill="#00aaaa"/>
+  <text x="36" y="23" font-family="monospace" font-size="8" font-weight="bold" fill="#000000" text-anchor="middle">LEFT</text>
+  <!-- Left panel rows -->
+  <rect x="14" y="28" width="44" height="8" fill="#ffff55"/>
+  <text x="16" y="34" font-family="monospace" font-size="6" font-weight="bold" fill="#000000">.. [UP-DIR]</text>
+  <text x="16" y="44" font-family="monospace" font-size="6" fill="#00ffff">/sys/net</text>
+  <text x="16" y="54" font-family="monospace" font-size="6" fill="#ffffff">wlan0</text>
+  <text x="16" y="64" font-family="monospace" font-size="6" fill="#ffffff">eth0</text>
+  <text x="16" y="74" font-family="monospace" font-size="6" fill="#00ff00">route</text>
+  <text x="16" y="84" font-family="monospace" font-size="6" fill="#ffffff">arp</text>
+  <text x="16" y="94" font-family="monospace" font-size="6" fill="#55ff55">ping</text>
+
+  <!-- Right Panel -->
+  <rect x="68" y="14" width="48" height="88" fill="#0000a8" stroke="#00aaaa" stroke-width="2"/>
+  <rect x="68" y="14" width="48" height="12" fill="#00aaaa"/>
+  <text x="92" y="23" font-family="monospace" font-size="8" font-weight="bold" fill="#000000" text-anchor="middle">RIGHT</text>
+  <!-- Right panel rows -->
+  <rect x="70" y="28" width="44" height="8" fill="#000055"/>
+  <text x="72" y="34" font-family="monospace" font-size="6" fill="#00ffff">.. [UP-DIR]</text>
+  <text x="72" y="44" font-family="monospace" font-size="6" fill="#ffffff">bssid_list</text>
+  <text x="72" y="54" font-family="monospace" font-size="6" fill="#ffff55">wifi_scan</text>
+  <text x="72" y="64" font-family="monospace" font-size="6" fill="#ffffff">port_scan</text>
+  <text x="72" y="74" font-family="monospace" font-size="6" fill="#ffffff">speed_test</text>
+  <text x="72" y="84" font-family="monospace" font-size="6" fill="#ffffff">dns_resolv</text>
+  <text x="72" y="94" font-family="monospace" font-size="6" fill="#00ffff">gateway</text>
+
+  <!-- Bottom Command Prompt Line -->
+  <rect x="12" y="106" width="104" height="12" fill="#000055" stroke="#00aaaa" stroke-width="1"/>
+  <text x="15" y="115" font-family="monospace" font-size="8" font-weight="bold" fill="#ffff55">1</text>
+  <text x="21" y="115" font-family="monospace" font-size="7" fill="#ffffff">Help </text>
+  <text x="43" y="115" font-family="monospace" font-size="8" font-weight="bold" fill="#ffff55">2</text>
+  <text x="49" y="115" font-family="monospace" font-size="7" fill="#ffffff">WiFi </text>
+  <text x="70" y="115" font-family="monospace" font-size="8" font-weight="bold" fill="#ffff55">3</text>
+  <text x="76" y="115" font-family="monospace" font-size="7" fill="#ffffff">ARP </text>
+  <text x="94" y="115" font-family="monospace" font-size="8" font-weight="bold" fill="#ffff55">10</text>
+  <text x="104" y="115" font-family="monospace" font-size="7" fill="#ffffff">Quit</text>
+
+  <!-- Centered Vintage "MC" Emblem overlay badge in the center -->
+  <g transform="translate(48, 40)">
+    <rect x="0" y="0" width="32" height="24" rx="4" fill="#000055" stroke="#ffff55" stroke-width="2"/>
+    <text x="16" y="17" font-family="monospace" font-size="14" font-weight="900" fill="#ffff55" text-anchor="middle" letter-spacing="1">MC</text>
+  </g>
+</svg>
