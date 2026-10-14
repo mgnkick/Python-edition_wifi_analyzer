@@ -36,6 +36,9 @@ jobs:
         with:
           packages: 'platforms;android-34 build-tools;34.0.0 platform-tools'
 
+      - name: Настройка Gradle
+        uses: gradle/actions/setup-gradle@v3
+
       - name: Настройка прав запуска Gradle Wrapper
         run: |
           chmod +x android/gradlew
@@ -44,7 +47,7 @@ jobs:
       - name: Компиляция автономного Android APK
         working-directory: android
         run: |
-          ./gradlew --no-daemon --stacktrace assembleDebug
+          ./gradlew --no-daemon assembleDebug
 
       - name: Подготовка единого .apk файла
         run: |
